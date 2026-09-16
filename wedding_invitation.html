@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#f4ecdc">
+<title>A Personal Invitation Awaits</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&family=Noto+Naskh+Arabic:wght@500;600&display=swap');
+
+:root{
+  --cream:#f5eddd;
+  --cream2:#fbf7ed;
+  --green:#123e34;
+  --green2:#1b5144;
+  --gold:#b58b47;
+  --gold2:#d7bb7d;
+  --ink:#19362f;
+  --muted:#746f63;
+  --paper-line:rgba(181,139,71,.45);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",Arial,sans-serif}
+body.gate-open{overflow:hidden}
+button,input{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
+
+/* ===== shared paper texture ===== */
+.paper{
+  background:
+    radial-gradient(circle at 20% 15%,rgba(181,139,71,.09),transparent 24%),
+    radial-gradient(circle at 85% 80%,rgba(18,62,52,.045),transparent 26%),
+    repeating-linear-gradient(0deg,rgba(70,55,30,.018) 0 1px,transparent 1px 5px),
+    var(--cream);
+}
+
+/* ===== NAME SCREEN ===== */
+#nameScreen{
+  min-height:100svh;display:grid;place-items:center;padding:18px;position:fixed;inset:0;
+  z-index:100;background:
+    radial-gradient(circle at 50% 25%,rgba(181,139,71,.12),transparent 28%),
+    var(--cream);
+  overflow:hidden;
+}
+#nameScreen::before{
+  content:"";position:absolute;inset:12px;border:1px solid rgba(181,139,71,.34);
+  pointer-events:none;
+}
+.name-card{
+  width:min(470px,100%);min-height:min(720px,94svh);position:relative;
+  display:flex;flex-direction:column;align-items:center;text-align:center;
+  padding:36px 26px 34px;overflow:hidden;
+  border:1px solid var(--paper-line);
+  background:
+    radial-gradient(circle at 50% 22%,rgba(181,139,71,.08),transparent 30%),
+    repeating-linear-gradient(45deg,transparent 0 20px,rgba(181,139,71,.016) 20px 21px),
+    var(--cream2);
+  box-shadow:0 25px 80px rgba(18,62,52,.12);
+}
+.name-card::before{
+  content:"";position:absolute;inset:10px;border:1px solid rgba(181,139,71,.25);
+}
+.arch{
+  position:relative;width:270px;height:185px;margin-top:0;
+  border:1px solid rgba(181,139,71,.45);border-bottom:0;
+  border-radius:150px 150px 0 0;
+}
+.arch::before{
+  content:"";position:absolute;inset:10px 10px 0;
+  border:1px solid rgba(181,139,71,.20);border-bottom:0;border-radius:140px 140px 0 0;
+}
+.lantern{position:absolute;top:16px;color:var(--gold);font-size:29px;z-index:3}
+.lantern.left{left:22px}.lantern.right{right:22px}
+.lantern::after{content:"";position:absolute;left:50%;top:-18px;width:1px;height:18px;background:var(--gold)}
+.envelope{
+  position:absolute;left:50%;top:70px;transform:translateX(-50%);
+  width:235px;height:145px;background:var(--green);
+  border:2px solid var(--gold);box-shadow:0 18px 32px rgba(18,62,52,.22);z-index:2;
+}
+.envelope::before{
+  content:"";position:absolute;inset:8px;border:1px solid rgba(215,187,125,.7);
+}
+.flap{
+  position:absolute;left:0;top:0;width:100%;height:75%;
+  background:#174a3e;clip-path:polygon(0 0,100% 0,50% 72%);z-index:3;
+  border-bottom:1px solid var(--gold2);
+}
+.envelope-fold{
+  position:absolute;inset:0;z-index:2;
+  background:linear-gradient(34deg,transparent 49.5%,rgba(215,187,125,.65) 50%,transparent 50.7%),
+             linear-gradient(146deg,transparent 49.5%,rgba(215,187,125,.65) 50%,transparent 50.7%);
+}
+.seal{
+  position:absolute;left:50%;top:55%;transform:translate(-50%,-50%);
+  width:52px;height:52px;border-radius:50%;display:grid;place-items:center;
+  background:var(--green);border:1px solid var(--gold2);color:var(--gold2);
+  font:600 24px "Noto Naskh Arabic",serif;z-index:5;
+}
+.name-kicker{font-size:10px;letter-spacing:3.5px;text-transform:uppercase;color:var(--gold);margin-top:8px}
+.name-title{
+  margin:11px 0 10px;font:600 clamp(38px,9vw,57px)/.88 "Cormorant Garamond",serif;
+  text-transform:uppercase;color:var(--ink);letter-spacing:.7px;
+}
+.name-sub{font:italic 21px "Cormorant Garamond",serif;color:#777163;margin:0 0 8px}
+.name-question{font:500 20px "Cormorant Garamond",serif;margin-bottom:19px}
+.name-form{width:min(350px,100%);position:relative;z-index:6}
+.name-input{
+  width:100%;border:1px solid rgba(181,139,71,.6);border-radius:7px;
+  background:rgba(255,255,255,.28);padding:14px 15px;text-align:center;
+  color:var(--green);outline:none;font:500 20px "Cormorant Garamond",serif;
+}
+.name-input:focus{border-color:var(--green);box-shadow:0 0 0 3px rgba(18,62,52,.08)}
+.name-input::placeholder{color:#8d8779}
+.name-error{height:22px;padding-top:6px;color:#a44e42;font-size:11px}
+.open-button{
+  width:100%;padding:15px;border-radius:7px;border:1px solid var(--gold2);
+  background:var(--green);color:white;letter-spacing:1.7px;font-size:11px;font-weight:600;
+  box-shadow:0 12px 25px rgba(18,62,52,.18);transition:.2s;
+}
+.open-button:hover{transform:translateY(-2px);background:var(--green2)}
+.name-footer{margin-top:auto;font:italic 17px "Cormorant Garamond",serif;color:#777163}
+
+/* ===== invitation shell ===== */
+#invitation{display:none}
+#invitation.active{display:block}
+.topbar{
+  position:fixed;top:0;left:0;right:0;height:48px;z-index:40;
+  display:flex;align-items:center;justify-content:space-between;padding:0 14px;
+  background:rgba(245,237,221,.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(181,139,71,.18);
+}
+.topbar span{font:500 18px "Cormorant Garamond",serif;color:var(--green)}
+.topbar button{
+  width:32px;height:32px;border-radius:50%;border:1px solid var(--paper-line);
+  background:var(--cream2);color:var(--green);
+}
+.screen{
+  min-height:100svh;position:relative;overflow:hidden;display:flex;justify-content:center;
+  align-items:center;padding:62px 20px 44px;
+}
+.inner{width:min(960px,100%);position:relative;z-index:2}
+
+/* ===== PAGE 1 ===== */
+.page1{
+  background:
+    radial-gradient(circle at 50% 40%,rgba(181,139,71,.13),transparent 35%),
+    repeating-linear-gradient(45deg,transparent 0 25px,rgba(181,139,71,.018) 25px 26px),
+    var(--cream);
+  text-align:center;
+}
+.page1::before,.page1::after{
+  content:"";position:absolute;border:1px solid rgba(181,139,71,.22);border-radius:50%;
+}
+.page1::before{width:620px;height:620px}.page1::after{width:790px;height:790px}
+.page1 .inner{text-align:center}
+.bismillah{font:600 25px "Noto Naskh Arabic",serif;color:var(--green);margin-bottom:4px}
+.bismillah-en{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#777163}
+.together{font:italic 21px "Cormorant Garamond",serif;color:#726d61;margin-top:22px}
+.couple-names{
+  margin:15px auto 13px;width:min(620px,100%);padding:8px 25px 15px;
+  border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line);
+  position:relative;
+}
+.couple-names::before,.couple-names::after{
+  content:"۞";position:absolute;top:50%;transform:translateY(-50%);
+  color:var(--gold);background:var(--cream);padding:3px;font-size:17px;
+}
+.couple-names::before{left:-9px}.couple-names::after{right:-9px}
+.person{font:600 clamp(48px,11vw,78px)/.82 "Cormorant Garamond",serif;color:var(--green)}
+.and{font:400 33px "Cormorant Garamond",serif;color:var(--gold);margin:9px 0}
+.request{font:italic 20px/1.35 "Cormorant Garamond",serif;color:#6e7068;max-width:490px;margin:0 auto}
+.guest-box{margin:18px auto 13px;padding:14px 20px;width:min(430px,100%);border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line)}
+.guest-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
+.guest-name{font:600 29px "Cormorant Garamond",serif;color:var(--green);margin-top:2px}
+.save-label{font-size:9px;letter-spacing:2.7px;text-transform:uppercase;color:var(--gold);margin-top:14px}
+.main-date{font:600 29px "Cormorant Garamond",serif;color:var(--green);margin:3px 0}
+.main-details{font-size:11px;line-height:1.6;color:#6c7069}
+.scroll{margin-top:20px;font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+.scroll b{display:block;font-size:20px;margin-top:3px;animation:bounce 1.6s infinite}
+@keyframes bounce{50%{transform:translateY(5px)}}
+
+/* mosque circular art */
+.mosque-circle{
+  width:150px;height:150px;border-radius:50%;margin:18px auto 7px;
+  background:var(--green);border:2px solid var(--gold);position:relative;
+  display:flex;align-items:flex-end;justify-content:center;overflow:hidden;
+  box-shadow:0 10px 30px rgba(18,62,52,.15);
+}
+.mosque-circle::before{content:"";position:absolute;inset:8px;border:1px solid var(--gold2);border-radius:50%}
+.moon{position:absolute;top:19px;right:37px;font-size:25px;color:var(--gold2)}
+.mosque-dome{
+  width:67px;height:55px;background:var(--gold2);border-radius:55px 55px 0 0;
+  position:relative;z-index:2;margin-bottom:0;
+}
+.mosque-dome::before{content:"";position:absolute;left:31px;top:-25px;width:3px;height:25px;background:var(--gold2)}
+.mosque-dome::after{content:"☪";position:absolute;left:25px;top:-39px;color:var(--gold2);font-size:18px}
+.minaret{position:absolute;bottom:0;width:13px;height:68px;background:var(--gold2)}
+.minaret.left{left:28px}.minaret.right{right:28px}
+.minaret::before{content:"";position:absolute;left:-5px;top:-8px;width:23px;height:10px;border-radius:50% 50% 0 0;background:var(--gold2)}
+.door{position:absolute;left:50%;bottom:0;transform:translateX(-50%);width:17px;height:29px;border-radius:10px 10px 0 0;background:var(--green)}
+
+/* ===== PAGE 2 ===== */
+.page2{
+  color:white;text-align:center;
+  background:
+    radial-gradient(circle at 50% 0,rgba(215,187,125,.10),transparent 24%),
+    linear-gradient(45deg,rgba(215,187,125,.035) 25%,transparent 25%,transparent 75%,rgba(215,187,125,.035) 75%),
+    linear-gradient(135deg,rgba(215,187,125,.025) 25%,transparent 25%,transparent 75%,rgba(215,187,125,.025) 75%),
+    var(--green);
+  background-size:auto,50px 50px,50px 50px,auto;
+  background-position:center,0 0,25px 25px,center;
+}
+.page2::before{
+  content:"";position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:min(590px,92vw);height:190px;border:1px solid rgba(215,187,125,.17);
+  border-bottom:0;border-radius:300px 300px 0 0;
+}
+.page2 .kicker{color:var(--gold2)}
+.section-title{font:600 clamp(47px,10vw,72px)/.9 "Cormorant Garamond",serif;margin:10px 0;color:var(--cream)}
+.section-sub{font:italic 19px "Cormorant Garamond",serif;color:#d4d7d0;margin:0}
+.events{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:32px auto 22px;
+  width:min(900px,100%);
+}
+.event{
+  position:relative;padding:24px 14px 21px;border:1px solid rgba(215,187,125,.55);
+  background:rgba(255,255,255,.025);min-height:260px;
+}
+.event::before{content:"";position:absolute;inset:7px;border:1px solid rgba(215,187,125,.18)}
+.event-symbol{
+  width:53px;height:53px;border:1px solid var(--gold2);border-radius:50%;
+  display:grid;place-items:center;margin:0 auto 10px;color:var(--gold2);font-size:23px;
+}
+.event h3{font:600 28px "Cormorant Garamond",serif;color:var(--cream);margin:3px 0}
+.event-date{font-size:9px;letter-spacing:1.8px;color:var(--gold2);margin:8px 0}
+.event-info{font-size:10px;line-height:1.65;color:#d4dad5}
+.map{
+  display:inline-block;margin-top:13px;border:1px solid var(--gold2);border-radius:20px;
+  padding:8px 12px;color:var(--green);background:var(--cream);text-decoration:none;
+  font-size:9px;letter-spacing:1px;font-weight:600;
+}
+.count-label{font-size:9px;letter-spacing:2.8px;color:var(--gold2);margin-top:10px}
+.countdown{display:flex;justify-content:center;gap:26px;margin-top:7px}
+.time strong{display:block;font:600 34px "Cormorant Garamond",serif;color:var(--cream)}
+.time span{font-size:7px;letter-spacing:1.3px;color:#aebbb2}
+.verse{margin:15px auto 0}
+.verse-text{font:italic 17px "Cormorant Garamond",serif;color:var(--cream)}
+.verse-ref{font-size:8px;letter-spacing:1.4px;color:var(--gold2);margin-top:3px}
+
+/* ===== PAGE 3 ===== */
+.page3{
+  text-align:center;
+  background:
+    radial-gradient(circle at 50% 40%,rgba(181,139,71,.12),transparent 31%),
+    repeating-linear-gradient(0deg,rgba(70,55,30,.018) 0 1px,transparent 1px 5px),
+    var(--cream);
+}
+.allah-medallion{
+  width:min(235px,62vw);aspect-ratio:1;margin:0 auto 25px;border-radius:50%;
+  background:var(--green);border:2px solid var(--gold);position:relative;
+  display:grid;place-items:center;box-shadow:0 18px 45px rgba(18,62,52,.15);
+}
+.allah-medallion::before{
+  content:"";position:absolute;inset:9px;border:1px solid var(--gold2);border-radius:50%;
+}
+.allah-medallion::after{
+  content:"";position:absolute;inset:18px;border:1px solid rgba(215,187,125,.5);border-radius:50%;
+}
+.allah{font:600 70px "Noto Naskh Arabic",serif;color:var(--gold2);z-index:2}
+.allah-star{position:absolute;top:19px;color:var(--gold2);z-index:3}
+.allah-star.bottom{top:auto;bottom:19px}
+.final-dear{font:600 34px "Cormorant Garamond",serif;color:var(--green);margin-bottom:8px}
+.final-copy{font:italic 20px/1.4 "Cormorant Garamond",serif;color:#6e7068;max-width:500px;margin:auto}
+.final-highlight{font:600 30px "Cormorant Garamond",serif;color:var(--green);margin:17px 0}
+.actions{display:grid;gap:9px;width:min(430px,100%);margin:22px auto}
+.action{
+  border:1px solid rgba(181,139,71,.65);border-radius:5px;padding:13px;
+  background:rgba(255,255,255,.18);color:var(--green);font-size:10px;letter-spacing:1.2px;
+  font-weight:600;
+}
+.action.primary{background:var(--green);color:white;border-color:var(--gold2)}
+.closing{font:italic 17px "Cormorant Garamond",serif;color:#777163;margin-top:20px}
+.signature{font:600 29px "Cormorant Garamond",serif;color:var(--green);margin-top:4px}
+.footer{font-size:9px;letter-spacing:1.4px;color:var(--gold);margin-top:18px}
+
+/* transition */
+#transition{
+  position:fixed;inset:0;background:var(--green);z-index:120;
+  display:grid;place-items:center;opacity:0;pointer-events:none;
+}
+#transition.show{animation:fadeout 1.65s ease forwards}
+.transition-inner{text-align:center;color:var(--cream)}
+.transition-inner .small{font:italic 20px "Cormorant Garamond",serif}
+.transition-inner .name{font:600 46px "Cormorant Garamond",serif;margin-top:4px}
+.transition-seal{
+  width:75px;height:75px;border:1px solid var(--gold2);border-radius:50%;
+  margin:0 auto 18px;display:grid;place-items:center;color:var(--gold2);font-size:28px;
+}
+@keyframes fadeout{0%,72%{opacity:1}100%{opacity:0}}
+
+/* responsive */
+@media(max-width:700px){
+  .name-card{min-height:680px}
+  .arch{width:245px;height:170px}
+  .envelope{width:210px;height:130px;top:66px}
+  .events{grid-template-columns:1fr;max-width:400px}
+  .event{min-height:0;padding:20px 15px}
+  .page1{align-items:flex-start}
+  .page1 .inner{padding-top:8px}
+  .mosque-circle{width:125px;height:125px}
+  .person{font-size:53px}
+  .couple-names{padding-left:18px;padding-right:18px}
+  .countdown{gap:17px}
+  .time strong{font-size:29px}
+}
+</style>
+</head>
+
+<body class="gate-open">
+
+<!-- ================= NAME ENTRY ================= -->
+<section id="nameScreen">
+  <div class="name-card">
+    <div class="arch">
+      <div class="lantern left">♧</div>
+      <div class="lantern right">♧</div>
+      <div class="envelope">
+        <div class="flap"></div>
+        <div class="envelope-fold"></div>
+        <div class="seal">الله</div>
+      </div>
+    </div>
+
+    <div class="name-kicker">A special invitation</div>
+    <h1 class="name-title">A Personal<br>Invitation Awaits</h1>
+    <p class="name-sub">Before we open it...</p>
+    <div class="name-question">May we know your name?</div>
+
+    <form id="nameForm" class="name-form">
+      <input id="guestInput" class="name-input" type="text"
+             maxlength="60" autocomplete="name" placeholder="Enter your name">
+      <div id="nameError" class="name-error"></div>
+      <button class="open-button" type="submit">OPEN INVITATION&nbsp;&nbsp; →</button>
+    </form>
+
+    <div class="name-footer">Good people make special moments more meaningful.</div>
+  </div>
+</section>
+
+<div id="transition">
+  <div class="transition-inner">
+    <div class="transition-seal">✦</div>
+    <div class="small">Prepared especially for</div>
+    <div id="transitionName" class="name"></div>
+  </div>
+</div>
+
+<!-- ================= INVITATION ================= -->
+<main id="invitation">
+
+  <header class="topbar">
+    <div>For <span id="barName"></span></div>
+    <button id="musicButton" title="Music">♫</button>
+  </header>
+
+  <!-- PAGE 1: THE INVITATION -->
+  <section class="screen page1" id="page1">
+    <div class="inner">
+      <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
+      <div class="bismillah-en">In the name of Allah, the Most Gracious, the Most Merciful</div>
+
+      <div class="together">Together with their families</div>
+
+      <div class="couple-names">
+        <div class="person" id="bride">Bride Name</div>
+        <div class="and">&amp;</div>
+        <div class="person" id="groom">Groom Name</div>
+      </div>
+
+      <div class="request">
+        request the pleasure of your company<br>
+        as they begin their beautiful journey together.
+      </div>
+
+      <div class="mosque-circle" aria-hidden="true">
+        <div class="moon">☾</div>
+        <div class="minaret left"></div>
+        <div class="minaret right"></div>
+        <div class="mosque-dome"><div class="door"></div></div>
+      </div>
+
+      <div class="guest-box">
+        <div class="guest-label">Dear</div>
+        <div class="guest-name" id="guest1"></div>
+      </div>
+
+      <div class="request">
+        With hearts full of joy and gratitude,<br>
+        we invite you to join us as we begin<br>
+        a new chapter of our lives.
+      </div>
+
+      <div class="save-label">Save the date</div>
+      <div class="main-date" id="mainDate">Saturday · 12 December 2026</div>
+      <div class="main-details" id="mainDetails">7:00 PM onwards · Venue Name · City, State</div>
+
+      <div class="scroll">Swipe / Scroll to continue <b>⌄</b></div>
+    </div>
+  </section>
+
+  <!-- PAGE 2: CELEBRATIONS -->
+  <section class="screen page2" id="page2">
+    <div class="inner">
+      <div class="kicker">Moments we would love to share with you</div>
+      <h2 class="section-title">The Celebrations</h2>
+      <p class="section-sub">A few beautiful moments leading to our forever...</p>
+
+      <div class="events">
+        <article class="event">
+          <div class="event-symbol">✧</div>
+          <h3>Mehndi</h3>
+          <div class="event-date" id="mehndiDate">10 DECEMBER · 5:00 PM</div>
+          <div class="event-info" id="mehndiVenue">Venue Name<br>City, State</div>
+          <a class="map" id="mehndiMap" href="#" target="_blank">VIEW LOCATION →</a>
+        </article>
+
+        <article class="event">
+          <div class="event-symbol">◉</div>
+          <h3>Nikah</h3>
+          <div class="event-date" id="nikahDate">12 DECEMBER · 7:00 PM</div>
+          <div class="event-info" id="nikahVenue">Venue Name<br>City, State</div>
+          <a class="map" id="nikahMap" href="#" target="_blank">VIEW LOCATION →</a>
+        </article>
+
+        <article class="event">
+          <div class="event-symbol">✦</div>
+          <h3>Walima</h3>
+          <div class="event-date" id="walimaDate">14 DECEMBER · 8:00 PM</div>
+          <div class="event-info" id="walimaVenue">Venue Name<br>City, State</div>
+          <a class="map" id="walimaMap" href="#" target="_blank">VIEW LOCATION →</a>
+        </article>
+      </div>
+
+      <div class="count-label">Counting down to forever</div>
+      <div class="countdown">
+        <div class="time"><strong id="days">00</strong><span>DAYS</span></div>
+        <div class="time"><strong id="hours">00</strong><span>HOURS</span></div>
+        <div class="time"><strong id="minutes">00</strong><span>MINUTES</span></div>
+        <div class="time"><strong id="seconds">00</strong><span>SECONDS</span></div>
+      </div>
+
+      <div class="verse">
+        <div class="verse-text">“And We created you in pairs”</div>
+        <div class="verse-ref">— Qur'an 78:8</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAGE 3: CLOSING -->
+  <section class="screen page3" id="page3">
+    <div class="inner">
+      <div class="allah-medallion">
+        <div class="allah-star">✦</div>
+        <div class="allah">الله</div>
+        <div class="allah-star bottom">✦</div>
+      </div>
+
+      <div class="final-dear">Dear <span id="guest3"></span>,</div>
+      <p class="final-copy">
+        Your presence, prayers and blessings<br>
+        will make our celebration even more special.
+      </p>
+
+      <div class="final-highlight">We can't wait to celebrate with you. ♡</div>
+
+      <div class="actions">
+        <button class="action primary" id="rsvp">♥ &nbsp; RSVP</button>
+        <button class="action" id="location">● &nbsp; VIEW LOCATION</button>
+        <button class="action" id="calendar">▣ &nbsp; ADD TO CALENDAR</button>
+        <button class="action" id="share">↗ &nbsp; SHARE INVITATION</button>
+      </div>
+
+      <div class="closing">May Allah bless you, guide you, and keep you in His endless mercy.</div>
+      <div class="closing">With love,</div>
+      <div class="signature" id="signature">Bride Name &amp; Groom Name</div>
+      <div class="footer">✦ A BEAUTIFUL BEGINNING, WITH ALLAH'S BLESSINGS ✦</div>
+    </div>
+  </section>
+</main>
+
+<script>
+/* =========================================================
+   CHANGE YOUR WEDDING DETAILS HERE
+   ========================================================= */
+const WEDDING = {
+  bride: "Bride Name",
+  groom: "Groom Name",
+
+  countdownDate: "2026-12-12T19:00:00",
+
+  mainDate: "Saturday · 12 December 2026",
+  mainDetails: "7:00 PM onwards · Venue Name · City, State",
+
+  events: {
+    mehndi: {
+      date: "10 DECEMBER · 5:00 PM",
+      venue: "Venue Name<br>City, State",
+      map: "https://www.google.com/maps"
+    },
+    nikah: {
+      date: "12 DECEMBER · 7:00 PM",
+      venue: "Venue Name<br>City, State",
+      map: "https://www.google.com/maps"
+    },
+    walima: {
+      date: "14 DECEMBER · 8:00 PM",
+      venue: "Venue Name<br>City, State",
+      map: "https://www.google.com/maps"
+    }
+  },
+
+  rsvpUrl: "#",
+  locationUrl: "https://www.google.com/maps",
+
+  calendar: {
+    title: "Wedding of Bride & Groom",
+    location: "Venue Name, City, State",
+    description: "Wedding celebration"
+  },
+
+  /* Optional: put your music file path here.
+     Example: "assets/wedding-music.mp3" */
+  musicFile: "__STREAMLIT_MUSIC_DATA__"
+};
+/* ========================================================= */
+
+const $ = id => document.getElementById(id);
+
+function loadWeddingData(){
+  $("bride").textContent = WEDDING.bride;
+  $("groom").textContent = WEDDING.groom;
+  $("signature").textContent = WEDDING.bride + " & " + WEDDING.groom;
+  $("mainDate").textContent = WEDDING.mainDate;
+  $("mainDetails").textContent = WEDDING.mainDetails;
+
+  for(const key of ["mehndi","nikah","walima"]){
+    $(""+key+"Date").textContent = WEDDING.events[key].date;
+    $(""+key+"Venue").innerHTML = WEDDING.events[key].venue;
+    $(""+key+"Map").href = WEDDING.events[key].map;
+  }
+}
+
+let guestName = "";
+
+function setGuestName(name){
+  guestName = name.trim();
+  $("barName").textContent = guestName;
+  $("guest1").textContent = guestName;
+  $("guest3").textContent = guestName;
+  $("transitionName").textContent = guestName;
+}
+
+$("nameForm").addEventListener("submit", function(e){
+  e.preventDefault();
+
+  const name = $("guestInput").value.trim();
+
+  if(name.length < 2){
+    $("nameError").textContent = "Please enter your name to continue.";
+    $("guestInput").focus();
+    return;
+  }
+
+  $("nameError").textContent = "";
+  setGuestName(name);
+
+  // Keep ALL invitation content hidden while the transition plays.
+  $("transition").classList.remove("show");
+  void $("transition").offsetWidth;
+  $("transition").classList.add("show");
+
+  setTimeout(function(){
+    $("nameScreen").classList.add("hidden");
+    $("invitation").classList.add("active");
+    document.body.classList.remove("gate-open");
+    window.scrollTo({top:0,behavior:"instant"});
+  }, 1150);
+});
+
+/* Countdown */
+function updateCountdown(){
+  const target = new Date(WEDDING.countdownDate).getTime();
+  let diff = target - Date.now();
+  if(diff < 0) diff = 0;
+
+  $("days").textContent = String(Math.floor(diff/86400000)).padStart(2,"0");
+  $("hours").textContent = String(Math.floor((diff/3600000)%24)).padStart(2,"0");
+  $("minutes").textContent = String(Math.floor((diff/60000)%60)).padStart(2,"0");
+  $("seconds").textContent = String(Math.floor((diff/1000)%60)).padStart(2,"0");
+}
+updateCountdown();
+setInterval(updateCountdown,1000);
+
+/* Buttons */
+$("location").addEventListener("click",()=>window.open(WEDDING.locationUrl,"_blank"));
+
+$("rsvp").addEventListener("click",()=>{
+  if(WEDDING.rsvpUrl !== "#") window.open(WEDDING.rsvpUrl,"_blank");
+  else alert("Add your RSVP link in the WEDDING section.");
+});
+
+$("share").addEventListener("click",async()=>{
+  const data={
+    title:"Wedding Invitation — "+WEDDING.bride+" & "+WEDDING.groom,
+    text:"You are invited to celebrate with us."
+  };
+  if(navigator.share){
+    try{await navigator.share(data)}catch(e){}
+  }else{
+    try{
+      await navigator.clipboard.writeText(location.href);
+      alert("Invitation link copied.");
+    }catch(e){alert("Copy the page link from your browser to share it.");}
+  }
+});
+
+$("calendar").addEventListener("click",()=>{
+  const start=new Date(WEDDING.countdownDate);
+  const end=new Date(start.getTime()+3*60*60*1000);
+  const fmt=d=>d.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}Z$/,"Z");
+  const url="https://calendar.google.com/calendar/render?action=TEMPLATE"
+    +"&text="+encodeURIComponent(WEDDING.calendar.title)
+    +"&dates="+fmt(start)+"/"+fmt(end)
+    +"&details="+encodeURIComponent(WEDDING.calendar.description)
+    +"&location="+encodeURIComponent(WEDDING.calendar.location);
+  window.open(url,"_blank");
+});
+
+/* Music is user initiated; no autoplay. */
+let audio=null, playing=false;
+if(WEDDING.musicFile){
+  audio=new Audio(WEDDING.musicFile);
+  audio.loop=true;
+  audio.volume=.42;
+}
+$("musicButton").addEventListener("click",async()=>{
+  if(!audio){
+    alert("Add your music file in WEDDING.musicFile first.");
+    return;
+  }
+  if(playing){
+    audio.pause();
+    playing=false;
+    $("musicButton").textContent="♫";
+  }else{
+    try{
+      await audio.play();
+      playing=true;
+      $("musicButton").textContent="🔊";
+    }catch(e){}
+  }
+});
+
+loadWeddingData();
+</script>
+</body>
+</html>
