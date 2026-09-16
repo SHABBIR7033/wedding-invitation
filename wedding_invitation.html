@@ -125,27 +125,26 @@ button{cursor:pointer}
 /* ===== invitation shell ===== */
 #invitation{display:none}
 #invitation.active{display:block}
-/* Streamlit owns the browser-level toolbar. This control stays inside the invitation iframe. */
-.topbar{
-  position:fixed;top:12px;left:14px;right:14px;height:46px;z-index:9999;
-  display:flex;align-items:center;justify-content:space-between;
-  pointer-events:none;
+/* Controls are part of the invitation canvas itself, never the Streamlit toolbar. */
+.page-controls{
+  position:absolute;top:16px;left:16px;right:16px;height:46px;z-index:9999;
+  display:flex;align-items:center;justify-content:space-between;pointer-events:none;
 }
-.topbar .guest-bar{
-  padding:8px 12px;border:1px solid rgba(181,139,71,.25);
-  border-radius:999px;background:rgba(255,250,240,.72);
-  backdrop-filter:blur(8px);font-size:10px;letter-spacing:1px;
-  color:#777163;
+.page-controls .guest-bar{
+  pointer-events:auto;padding:8px 12px;border:1px solid rgba(181,139,71,.42);
+  border-radius:999px;background:rgba(255,250,240,.98);font-size:10px;letter-spacing:1px;
+  color:#777163;box-shadow:0 5px 16px rgba(18,62,52,.12);white-space:nowrap;
 }
-.topbar .guest-bar span{font:500 16px "Cormorant Garamond",serif;color:var(--green)}
-.topbar button{
-  pointer-events:auto;min-width:46px;height:42px;padding:0 15px;
-  border-radius:999px;border:1px solid rgba(181,139,71,.55);
-  background:rgba(255,250,240,.92);color:var(--green);
-  font:600 11px "DM Sans",Arial,sans-serif;letter-spacing:.8px;
-  box-shadow:0 8px 22px rgba(18,62,52,.10);cursor:pointer;
+.page-controls .guest-bar span{font:500 16px \"Cormorant Garamond\",serif;color:var(--green)}
+.page-controls button{
+  pointer-events:auto;display:flex!important;visibility:visible!important;opacity:1!important;
+  align-items:center;justify-content:center;width:104px;height:42px;padding:0 14px;
+  border-radius:999px;border:1px solid var(--gold);background:var(--cream2);color:var(--green);
+  font:600 12px \"DM Sans\",Arial,sans-serif;letter-spacing:.7px;
+  box-shadow:0 7px 20px rgba(18,62,52,.18);cursor:pointer;
+  position:relative;z-index:10000;
 }
-.topbar button:hover{transform:translateY(-1px);background:var(--cream2)}
+.page-controls button:hover{transform:translateY(-1px);background:#fffaf0}
 .screen{
   min-height:100vh;height:100vh;position:relative;overflow:hidden;display:flex;justify-content:center;
   align-items:center;padding:56px 20px 32px;
@@ -317,13 +316,10 @@ button{cursor:pointer}
   .envelope{width:210px;height:130px;top:66px}
   .events{grid-template-columns:1fr;max-width:400px}
   .event{min-height:0;padding:20px 15px}
-  .topbar{top:8px;left:10px;right:10px;height:44px}
-  .topbar .guest-bar{font-size:9px;padding:7px 10px}
-  .topbar .guest-bar span{font-size:14px}
-  .topbar button{
-    min-width:48px;height:40px;padding:0 12px;
-    font-size:10px;background:rgba(255,250,240,.97);
-  }
+  .page-controls{top:10px;left:10px;right:10px;height:40px}
+  .page-controls .guest-bar{font-size:8px;padding:7px 9px}
+  .page-controls .guest-bar span{font-size:13px}
+  .page-controls button{width:92px;height:38px;padding:0 10px;font-size:10px}
   .screen{min-height:0;height:auto;padding:62px 16px 34px}
   .page1{align-items:flex-start;min-height:680px;overflow:hidden}
   .page1 .inner{padding-top:4px;max-height:none}
@@ -379,13 +375,12 @@ button{cursor:pointer}
 <!-- ================= INVITATION ================= -->
 <main id="invitation">
 
-  <header class="topbar">
-    <div class="guest-bar">For <span id="barName"></span></div>
-    <button id="musicButton" title="Play or pause wedding music">♫ &nbsp; Music</button>
-  </header>
-
   <!-- PAGE 1: THE INVITATION -->
   <section class="screen page1" id="page1">
+    <div class="page-controls">
+      <div class="guest-bar">For <span id="barName"></span></div>
+      <button id="musicButton" type="button" title="Play or pause wedding music">♫ &nbsp; Music</button>
+    </div>
     <div class="inner">
       <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>
       <div class="bismillah-en">In the name of Allah, the Most Gracious, the Most Merciful</div>
