@@ -35,7 +35,7 @@ st.markdown(
     <style>
       [data-testid="stAppViewContainer"] {padding:0!important;}
       [data-testid="stMainBlockContainer"] {
-          padding:0!important;
+          padding:4.5rem 0 0!important;
           max-width:none!important;
       }
       iframe {display:block;width:100%!important;border:0!important;}
