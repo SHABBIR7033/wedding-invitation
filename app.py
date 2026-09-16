@@ -28,19 +28,17 @@ def load_invitation():
 
 html = load_invitation()
 
-# Hide Streamlit's own page chrome so the invitation occupies the whole browser.
+# Keep Streamlit's top bar/menu visible so the deployed app retains its
+# native Share / app menu controls. Only remove unnecessary content spacing.
 st.markdown(
     """
     <style>
-      #MainMenu {visibility:hidden;}
-      footer {visibility:hidden;}
-      header {visibility:hidden;}
       [data-testid="stAppViewContainer"] {padding:0!important;}
       [data-testid="stMainBlockContainer"] {
           padding:0!important;
           max-width:none!important;
       }
-      iframe {display:block;}
+      iframe {display:block;width:100%!important;border:0!important;}
     </style>
     """,
     unsafe_allow_html=True,
@@ -48,6 +46,6 @@ st.markdown(
 
 components.html(
     html,
-    height=3000,
+    height=900,
     scrolling=True,
 )

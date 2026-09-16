@@ -21,7 +21,7 @@
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",Arial,sans-serif}
+body{margin:0;padding:0;background:var(--cream);color:var(--ink);font-family:"DM Sans",Arial,sans-serif;overflow-x:hidden}
 body.gate-open{overflow:hidden}
 button,input{font:inherit}
 button{cursor:pointer}
@@ -49,7 +49,7 @@ button{cursor:pointer}
   pointer-events:none;
 }
 .name-card{
-  width:min(470px,100%);min-height:min(720px,94svh);position:relative;
+  width:min(470px,100%);height:min(720px,94vh);min-height:0;position:relative;
   display:flex;flex-direction:column;align-items:center;text-align:center;
   padding:36px 26px 34px;overflow:hidden;
   border:1px solid var(--paper-line);
@@ -137,8 +137,8 @@ button{cursor:pointer}
   background:var(--cream2);color:var(--green);
 }
 .screen{
-  min-height:100svh;position:relative;overflow:hidden;display:flex;justify-content:center;
-  align-items:center;padding:62px 20px 44px;
+  min-height:100vh;height:100vh;position:relative;overflow:hidden;display:flex;justify-content:center;
+  align-items:center;padding:56px 20px 32px;
 }
 .inner{width:min(960px,100%);position:relative;z-index:2}
 
@@ -154,7 +154,7 @@ button{cursor:pointer}
   content:"";position:absolute;border:1px solid rgba(181,139,71,.22);border-radius:50%;
 }
 .page1::before{width:620px;height:620px}.page1::after{width:790px;height:790px}
-.page1 .inner{text-align:center}
+.page1 .inner{text-align:center;max-height:calc(100vh - 88px);}
 .bismillah{font:600 25px "Noto Naskh Arabic",serif;color:var(--green);margin-bottom:4px}
 .bismillah-en{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#777163}
 .together{font:italic 21px "Cormorant Garamond",serif;color:#726d61;margin-top:22px}
@@ -171,19 +171,19 @@ button{cursor:pointer}
 .person{font:600 clamp(48px,11vw,78px)/.82 "Cormorant Garamond",serif;color:var(--green)}
 .and{font:400 33px "Cormorant Garamond",serif;color:var(--gold);margin:9px 0}
 .request{font:italic 20px/1.35 "Cormorant Garamond",serif;color:#6e7068;max-width:490px;margin:0 auto}
-.guest-box{margin:18px auto 13px;padding:14px 20px;width:min(430px,100%);border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line)}
+.guest-box{margin:12px auto 9px;padding:14px 20px;width:min(430px,100%);border-top:1px solid var(--paper-line);border-bottom:1px solid var(--paper-line)}
 .guest-label{font-size:9px;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold)}
 .guest-name{font:600 29px "Cormorant Garamond",serif;color:var(--green);margin-top:2px}
 .save-label{font-size:9px;letter-spacing:2.7px;text-transform:uppercase;color:var(--gold);margin-top:14px}
 .main-date{font:600 29px "Cormorant Garamond",serif;color:var(--green);margin:3px 0}
 .main-details{font-size:11px;line-height:1.6;color:#6c7069}
-.scroll{margin-top:20px;font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
+.scroll{margin-top:12px;font-size:9px;letter-spacing:2px;color:var(--gold);text-transform:uppercase}
 .scroll b{display:block;font-size:20px;margin-top:3px;animation:bounce 1.6s infinite}
 @keyframes bounce{50%{transform:translateY(5px)}}
 
 /* mosque circular art */
 .mosque-circle{
-  width:150px;height:150px;border-radius:50%;margin:18px auto 7px;
+  width:132px;height:132px;border-radius:50%;margin:12px auto 5px;
   background:var(--green);border:2px solid var(--gold);position:relative;
   display:flex;align-items:flex-end;justify-content:center;overflow:hidden;
   box-shadow:0 10px 30px rgba(18,62,52,.15);
@@ -221,12 +221,12 @@ button{cursor:pointer}
 .section-title{font:600 clamp(47px,10vw,72px)/.9 "Cormorant Garamond",serif;margin:10px 0;color:var(--cream)}
 .section-sub{font:italic 19px "Cormorant Garamond",serif;color:#d4d7d0;margin:0}
 .events{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:32px auto 22px;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:13px;margin:22px auto 16px;
   width:min(900px,100%);
 }
 .event{
-  position:relative;padding:24px 14px 21px;border:1px solid rgba(215,187,125,.55);
-  background:rgba(255,255,255,.025);min-height:260px;
+  position:relative;padding:20px 14px 17px;border:1px solid rgba(215,187,125,.55);
+  background:rgba(255,255,255,.025);min-height:220px;
 }
 .event::before{content:"";position:absolute;inset:7px;border:1px solid rgba(215,187,125,.18)}
 .event-symbol{
@@ -258,7 +258,7 @@ button{cursor:pointer}
     var(--cream);
 }
 .allah-medallion{
-  width:min(235px,62vw);aspect-ratio:1;margin:0 auto 25px;border-radius:50%;
+  width:min(235px,62vw);aspect-ratio:1;margin:0 auto 18px;border-radius:50%;
   background:var(--green);border:2px solid var(--gold);position:relative;
   display:grid;place-items:center;box-shadow:0 18px 45px rgba(18,62,52,.15);
 }
@@ -274,7 +274,7 @@ button{cursor:pointer}
 .final-dear{font:600 34px "Cormorant Garamond",serif;color:var(--green);margin-bottom:8px}
 .final-copy{font:italic 20px/1.4 "Cormorant Garamond",serif;color:#6e7068;max-width:500px;margin:auto}
 .final-highlight{font:600 30px "Cormorant Garamond",serif;color:var(--green);margin:17px 0}
-.actions{display:grid;gap:9px;width:min(430px,100%);margin:22px auto}
+.actions{display:grid;gap:9px;width:min(430px,100%);margin:16px auto}
 .action{
   border:1px solid rgba(181,139,71,.65);border-radius:5px;padding:13px;
   background:rgba(255,255,255,.18);color:var(--green);font-size:10px;letter-spacing:1.2px;
@@ -302,16 +302,17 @@ button{cursor:pointer}
 
 /* responsive */
 @media(max-width:700px){
-  .name-card{min-height:680px}
+  .name-card{height:min(680px,94vh);min-height:0}
   .arch{width:245px;height:170px}
   .envelope{width:210px;height:130px;top:66px}
   .events{grid-template-columns:1fr;max-width:400px}
   .event{min-height:0;padding:20px 15px}
-  .page1{align-items:flex-start}
-  .page1 .inner{padding-top:8px}
+  .page1{align-items:flex-start;height:auto;min-height:100vh;overflow:visible}
+  .page1 .inner{padding-top:8px;max-height:none}
   .mosque-circle{width:125px;height:125px}
   .person{font-size:53px}
   .couple-names{padding-left:18px;padding-right:18px}
+  .page2,.page3{height:auto;min-height:100vh;overflow:visible;padding-top:58px;padding-bottom:30px}
   .countdown{gap:17px}
   .time strong{font-size:29px}
 }
