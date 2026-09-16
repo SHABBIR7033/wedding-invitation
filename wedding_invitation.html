@@ -125,17 +125,27 @@ button{cursor:pointer}
 /* ===== invitation shell ===== */
 #invitation{display:none}
 #invitation.active{display:block}
+/* Streamlit owns the browser-level toolbar. This control stays inside the invitation iframe. */
 .topbar{
-  position:fixed;top:0;left:0;right:0;height:48px;z-index:40;
-  display:flex;align-items:center;justify-content:space-between;padding:0 14px;
-  background:rgba(245,237,221,.82);backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(181,139,71,.18);
+  position:absolute;top:14px;left:18px;right:18px;height:42px;z-index:100;
+  display:flex;align-items:center;justify-content:space-between;
+  pointer-events:none;
 }
-.topbar span{font:500 18px "Cormorant Garamond",serif;color:var(--green)}
+.topbar .guest-bar{
+  padding:7px 12px;border:1px solid rgba(181,139,71,.25);
+  border-radius:999px;background:rgba(255,250,240,.72);
+  backdrop-filter:blur(8px);font-size:10px;letter-spacing:1px;
+  color:#777163;
+}
+.topbar .guest-bar span{font:500 16px "Cormorant Garamond",serif;color:var(--green)}
 .topbar button{
-  width:32px;height:32px;border-radius:50%;border:1px solid var(--paper-line);
-  background:var(--cream2);color:var(--green);
+  pointer-events:auto;width:auto;min-width:42px;height:42px;padding:0 14px;
+  border-radius:999px;border:1px solid rgba(181,139,71,.55);
+  background:rgba(255,250,240,.92);color:var(--green);
+  font:600 11px "DM Sans",Arial,sans-serif;letter-spacing:.8px;
+  box-shadow:0 8px 22px rgba(18,62,52,.10);cursor:pointer;
 }
+.topbar button:hover{transform:translateY(-1px);background:var(--cream2)}
 .screen{
   min-height:100vh;height:100vh;position:relative;overflow:hidden;display:flex;justify-content:center;
   align-items:center;padding:56px 20px 32px;
@@ -362,8 +372,8 @@ button{cursor:pointer}
 <main id="invitation">
 
   <header class="topbar">
-    <div>For <span id="barName"></span></div>
-    <button id="musicButton" title="Music">♫</button>
+    <div class="guest-bar">For <span id="barName"></span></div>
+    <button id="musicButton" title="Play or pause wedding music">♫ &nbsp; Music</button>
   </header>
 
   <!-- PAGE 1: THE INVITATION -->
