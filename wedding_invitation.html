@@ -127,7 +127,7 @@ button{cursor:pointer}
 #invitation.active{display:block}
 /* Invitation controls: normal document flow, always visible inside the iframe. */
 .page-controls{
-  width:min(960px,100%); min-height:52px; margin:42px auto 10px; padding:0 2px;
+  width:min(960px,100%); min-height:52px; margin:0 auto 18px; padding:0 2px;
   display:flex; align-items:center; justify-content:space-between; gap:12px;
   position:relative; z-index:50; pointer-events:auto;
 }
@@ -150,8 +150,8 @@ button{cursor:pointer}
 }
 .page-controls button:hover{transform:translateY(-1px);background:#fff3d9}
 .screen{
-  min-height:100vh;position:relative;overflow:visible;display:flex;justify-content:center;
-  align-items:flex-start;padding:18px 20px 42px;
+  min-height:100vh;position:relative;overflow:visible;display:flex;flex-direction:column;
+  justify-content:flex-start;align-items:center;padding:18px 20px 42px;
 }
 .inner{width:min(960px,100%);position:relative;z-index:2}
 
@@ -320,11 +320,11 @@ button{cursor:pointer}
   .envelope{width:210px;height:130px;top:66px}
   .events{grid-template-columns:1fr;max-width:400px}
   .event{min-height:0;padding:20px 15px}
-  .page-controls{min-height:46px;margin:30px auto 8px;padding:0 2px}
+  .page-controls{min-height:46px;margin:0 auto 18px;padding:0 2px}
   .page-controls .guest-bar{font-size:8px;padding:7px 9px}
   .page-controls .guest-bar span{font-size:13px}
   .page-controls button{width:92px;min-width:92px;height:38px;padding:0 9px;font-size:10px}
-  .screen{min-height:0;height:auto;padding:12px 12px 34px}
+  .screen{min-height:0;height:auto;padding:12px 12px 34px;flex-direction:column}
   .page1{align-items:flex-start;min-height:0;overflow:visible}
   .page1 .inner{padding-top:0;max-height:none}
   .mosque-circle{width:115px;height:115px}
