@@ -125,29 +125,33 @@ button{cursor:pointer}
 /* ===== invitation shell ===== */
 #invitation{display:none}
 #invitation.active{display:block}
-/* Controls are part of the invitation canvas itself, never the Streamlit toolbar. */
+/* Invitation controls: normal document flow, always visible inside the iframe. */
 .page-controls{
-  position:absolute;top:16px;left:16px;right:16px;height:46px;z-index:9999;
-  display:flex;align-items:center;justify-content:space-between;pointer-events:none;
+  width:min(960px,100%); min-height:52px; margin:0 auto 10px; padding:0 2px;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  position:relative; z-index:50; pointer-events:auto;
 }
 .page-controls .guest-bar{
-  pointer-events:auto;padding:8px 12px;border:1px solid rgba(181,139,71,.42);
-  border-radius:999px;background:rgba(255,250,240,.98);font-size:10px;letter-spacing:1px;
-  color:#777163;box-shadow:0 5px 16px rgba(18,62,52,.12);white-space:nowrap;
+  display:flex; align-items:center; gap:5px; padding:8px 13px;
+  border:1px solid rgba(181,139,71,.52); border-radius:999px;
+  background:#fffaf0; color:#777163; font-size:10px; letter-spacing:1px;
+  box-shadow:0 5px 16px rgba(18,62,52,.12); white-space:nowrap;
 }
-.page-controls .guest-bar span{font:500 16px \"Cormorant Garamond\",serif;color:var(--green)}
+.page-controls .guest-bar span{font:600 16px \"Cormorant Garamond\",serif;color:var(--green)}
 .page-controls button{
-  pointer-events:auto;display:flex!important;visibility:visible!important;opacity:1!important;
-  align-items:center;justify-content:center;width:104px;height:42px;padding:0 14px;
-  border-radius:999px;border:1px solid var(--gold);background:var(--cream2);color:var(--green);
-  font:600 12px \"DM Sans\",Arial,sans-serif;letter-spacing:.7px;
-  box-shadow:0 7px 20px rgba(18,62,52,.18);cursor:pointer;
-  position:relative;z-index:10000;
+  display:flex!important; visibility:visible!important; opacity:1!important;
+  align-items:center; justify-content:center; flex:0 0 auto;
+  width:112px; min-width:112px; height:42px; padding:0 14px;
+  border-radius:999px; border:1px solid var(--gold);
+  background:#fffaf0; color:var(--green);
+  font:600 12px \"DM Sans\",Arial,sans-serif; letter-spacing:.7px;
+  box-shadow:0 7px 20px rgba(18,62,52,.18); cursor:pointer;
+  position:relative; z-index:60;
 }
-.page-controls button:hover{transform:translateY(-1px);background:#fffaf0}
+.page-controls button:hover{transform:translateY(-1px);background:#fff3d9}
 .screen{
-  min-height:100vh;height:100vh;position:relative;overflow:hidden;display:flex;justify-content:center;
-  align-items:center;padding:56px 20px 32px;
+  min-height:100vh;position:relative;overflow:visible;display:flex;justify-content:center;
+  align-items:flex-start;padding:18px 20px 42px;
 }
 .inner{width:min(960px,100%);position:relative;z-index:2}
 
@@ -163,7 +167,7 @@ button{cursor:pointer}
   content:"";position:absolute;border:1px solid rgba(181,139,71,.22);border-radius:50%;
 }
 .page1::before{width:620px;height:620px}.page1::after{width:790px;height:790px}
-.page1 .inner{text-align:center;max-height:calc(100vh - 88px);}
+.page1 .inner{text-align:center;}
 .bismillah{font:600 25px "Noto Naskh Arabic",serif;color:var(--green);margin-bottom:4px}
 .bismillah-en{font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:#777163}
 .together{font:italic 21px "Cormorant Garamond",serif;color:#726d61;margin-top:22px}
@@ -316,17 +320,17 @@ button{cursor:pointer}
   .envelope{width:210px;height:130px;top:66px}
   .events{grid-template-columns:1fr;max-width:400px}
   .event{min-height:0;padding:20px 15px}
-  .page-controls{top:10px;left:10px;right:10px;height:40px}
+  .page-controls{min-height:46px;margin-bottom:8px;padding:0 2px}
   .page-controls .guest-bar{font-size:8px;padding:7px 9px}
   .page-controls .guest-bar span{font-size:13px}
-  .page-controls button{width:92px;height:38px;padding:0 10px;font-size:10px}
-  .screen{min-height:0;height:auto;padding:62px 16px 34px}
-  .page1{align-items:flex-start;min-height:680px;overflow:hidden}
-  .page1 .inner{padding-top:4px;max-height:none}
+  .page-controls button{width:92px;min-width:92px;height:38px;padding:0 9px;font-size:10px}
+  .screen{min-height:0;height:auto;padding:12px 12px 34px}
+  .page1{align-items:flex-start;min-height:0;overflow:visible}
+  .page1 .inner{padding-top:0;max-height:none}
   .mosque-circle{width:115px;height:115px}
   .person{font-size:48px}
   .couple-names{padding-left:10px;padding-right:10px}
-  .page2,.page3{min-height:680px;overflow:visible;padding-top:62px;padding-bottom:36px}
+  .page2,.page3{min-height:680px;overflow:visible;padding-top:36px;padding-bottom:36px}
   .countdown{gap:14px}
   .time strong{font-size:27px}
 }
@@ -379,7 +383,7 @@ button{cursor:pointer}
   <section class="screen page1" id="page1">
     <div class="page-controls">
       <div class="guest-bar">For <span id="barName"></span></div>
-      <button id="musicButton" type="button" title="Play or pause wedding music">♫ &nbsp; Music</button>
+      <button id="musicButton" type="button" aria-label="Play or pause wedding music" title="Play or pause wedding music">♫&nbsp; Music</button>
     </div>
     <div class="inner">
       <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ</div>

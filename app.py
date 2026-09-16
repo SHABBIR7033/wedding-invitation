@@ -46,6 +46,6 @@ st.markdown(
 
 components.html(
     html,
-    height=900,
+    height=1100,
     scrolling=True,
 )
